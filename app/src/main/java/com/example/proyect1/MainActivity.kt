@@ -27,6 +27,7 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Card
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -47,7 +48,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-//import com.example.proyect1.ui.theme.Proyect1Theme
+
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import com.example.proyect1.ui.theme.Proyect1Theme
+import com.example.proyect1.ui.theme.Screens.HomeScreen
+import com.example.proyect1.ui.theme.Screens.MenuScreen
+import java.security.AccessController
+
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 
 
 class MainActivity : ComponentActivity() {
@@ -55,8 +66,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()
         setContent {
+            multiScreenApp()
 
-            Column(
+           /*Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState()),
@@ -74,7 +86,7 @@ class MainActivity : ComponentActivity() {
                 //  ModifierExample3()
             }
             //Layouts
-            /*Column {
+            Column {
                  Text(text = "First Row")
                  Text(text = "Second Row")
                  Text(text = "Third Row")
@@ -96,7 +108,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private fun column(function: () -> Unit) {
+/*private fun column(function: () -> Unit) {
 
 }
 
@@ -186,7 +198,7 @@ fun Picture() {
         Image(
             modifier = Modifier
                 .fillMaxWidth(),
-            painter = painterResource(R.drawable.leon),
+            painter = painterResource(R.drawable.Leon),
             contentDescription = "Logo Android",
             contentScale = ContentScale.Crop
         )
@@ -214,7 +226,7 @@ fun Content1() {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp),
-            painter = painterResource(id = R.drawable.leon),
+            painter = painterResource(id = R.drawable.Leon),
             contentDescription = "Logo Android",
             contentScale = ContentScale.Crop
         )
@@ -236,7 +248,7 @@ fun BoxExample1(){
             .fillMaxWidth()
             .padding(5.dp)
     ){
-        Image(painterResource(R.drawable.leon),
+        Image(painterResource(R.drawable.Leon),
             contentDescription = "Android Logo",
             contentScale = ContentScale.FillBounds
         )
@@ -276,5 +288,25 @@ fun BoxExample2(){
 
 fun clickAction() {
     println("Column Clicked")
+*
+}*/
 
+@Composable
+fun multiScreenApp(){
+    val navController=rememberNavController()
+    Surface (color = Color.White){
+        setupNavGraph(navController=navController)
+    }
+}
+
+@Composable
+fun setupNavGraph(navController: NavHostController) {
+    NavHost(navController = navController, startDestination = "menu") {
+        composable("menu") {
+            MenuScreen(navController)
+        }
+        composable("home") {
+            HomeScreen(navController)
+        }
+    }
 }
