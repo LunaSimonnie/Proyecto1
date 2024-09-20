@@ -1,6 +1,6 @@
 package com.example.proyect1
 
-import android.graphics.Picture
+/*import android.graphics.Picture
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -307,6 +307,131 @@ fun setupNavGraph(navController: NavHostController) {
         }
         composable("home") {
             HomeScreen(navController)
+        }
+    }
+}*/
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.prueba_calendario.ui.theme.Prueba_CalendarioTheme
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            Prueba_CalendarioTheme {
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    PeriodDays()
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun PeriodDays() {
+    // Listas de números y mensajes
+    val days = listOf(4, 9, 6, 23)
+    val messages = listOf(
+        "Días hasta periodo fértil",
+        "Días hasta la ovulación",
+        "Día del ciclo",
+        "Días hasta el periodo"
+    )
+    val meses = listOf(
+        "enero", "febrero", "marzo", "abril", "mayo", "junio",
+        "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+    )
+
+    // Agrupar tarjetas y meses en una columna
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // Generar fila de tarjetas
+        Row(
+            modifier = Modifier
+                .horizontalScroll(rememberScrollState())
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            days.zip(messages).forEach { (day, message) ->
+                Card(
+                    modifier = Modifier
+                        .width(200.dp)
+                        .height(250.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color.White, // Color de fondo blanco
+                    )
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(
+                            text = "$day",
+                            style = MaterialTheme.typography.headlineLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 50.sp // Tamaño del número a 50sp
+                            ),
+                            textAlign = TextAlign.Center
+                        )
+                        Text(
+                            text = message,
+                            style = MaterialTheme.typography.bodyMedium.copy(
+                                fontSize = 14.sp
+                            ),
+                            textAlign = TextAlign.Center
+                        )
+                        Spacer(modifier = Modifier.weight(1f)) // Espacio para que el botón quede abajo
+                        Button(
+                            onClick = { /* Acción del botón */ },
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFF3759A), // Rosa fuerte
+                                contentColor = Color.White
+                            )
+                        ) {
+                            Text("Editar periodo")
+                        }
+                    }
+                }
+            }
+        }
+
+        // Generar fila de meses que se desplaza horizontalmente
+        Row(
+            modifier = Modifier
+                .horizontalScroll(rememberScrollState())
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            meses.forEach { mes ->
+                Text(
+                    text = mes,
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(8.dp)
+                )
+            }
         }
     }
 }
