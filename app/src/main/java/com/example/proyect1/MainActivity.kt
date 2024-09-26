@@ -10,6 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.Absolute.SpaceEvenly
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,15 +24,22 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
@@ -67,11 +75,14 @@ import com.example.proyect1.ui.theme.Screens.MenuScreen
 import java.security.AccessController
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.modifier.modifierLocalMapOf
 
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.proyect1.ui.theme.Screens.ComponentsScreen
 import kotlinx.coroutines.launch
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 
 class MainActivity : ComponentActivity() {
@@ -79,44 +90,44 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()
         setContent {
-           /* multiScreenApp()*/
+             multiScreenApp()
 
-           /*Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                CustomText()
-                Picture()
-                Content1()
+            /*Column(
+                 modifier = Modifier
+                     .fillMaxSize()
+                     .verticalScroll(rememberScrollState()),
+                 verticalArrangement = Arrangement.Center,
+                 horizontalAlignment = Alignment.CenterHorizontally
+             ) {
+                 CustomText()
+                 Picture()
+                 Content1()
 
 
-                // Text(text ="Simple text")
-                // ModifierExample()
-                //ModifierExample2()
-                //  ModifierExample3()
-            }
-            //Layouts
-            Column {
-                 Text(text = "First Row")
-                 Text(text = "Second Row")
-                 Text(text = "Third Row")
+                 // Text(text ="Simple text")
+                 // ModifierExample()
+                 //ModifierExample2()
+                 //  ModifierExample3()
+             }
+             //Layouts
+             Column {
+                  Text(text = "First Row")
+                  Text(text = "Second Row")
+                  Text(text = "Third Row")
 
-                 Row{
-                     Text(text = "Text1")
-                     Text(text = "Text2")
-                     Text(text = "Text3")
-                     Text(text = "Text2")
-                 }
-                 Box{
-                     Text(text = "Larabel 1")
-                     Text(text = "Larabel 2")
+                  Row{
+                      Text(text = "Text1")
+                      Text(text = "Text2")
+                      Text(text = "Text3")
+                      Text(text = "Text2")
+                  }
+                  Box{
+                      Text(text = "Larabel 1")
+                      Text(text = "Larabel 2")
 
-                 }
-                 Greeting(name ="World")
-             }*/
+                  }
+                  Greeting(name ="World")
+              }*/
         }
     }
 }
@@ -304,7 +315,7 @@ fun clickAction() {
 *
 }*/
 
-/*@Composable
+@Composable
 fun multiScreenApp(){
     val navController=rememberNavController()
     Surface (color = Color.White){
@@ -321,64 +332,9 @@ fun setupNavGraph(navController: NavHostController) {
         composable("home") {
             HomeScreen(navController)
         }
-    }
-}*/
-
-@Composable
-fun ComponentScreen(navController: NavController) {
-    var component by remember{ mutableStateOf("") }
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-    ModalNavigationDrawer(
-        drawerState = drawerState, //current state of drawer
-        drawerContent = {
-            ModalDrawerSheet {
-                Text("Menu",
-                    modifier = Modifier
-                        .padding(16.dp))
-                HorizontalDivider()
-                //Content 1
-                NavigationDrawerItem(
-                    label = { Text(text = "Content1") },
-                    selected = false,
-                    onClick = {
-                        component = "Content1"
-                        scope.launch {
-                        }
-                    }
-                )
-                //Content 2
-                NavigationDrawerItem(
-                    label = { Text(text = "Content2") },
-                    selected = false,
-                    onClick = {
-                        component = "Content2"
-                        scope.launch {
-                        }
-                    }
-                )
-            }
-        }
-    ) {
-        //Screen Content
-        Column {
-            when(component){
-                "Content1" -> {
-                    Content1()
-                }
-                "Content2" -> {
-                    Content2()
-                }
-            }
+        composable("Components") {
+           ComponentsScreen(navController)
         }
     }
 }
-@Composable
-fun Content2() {
-    Text(text = "Content2")
-}
 
-@Composable
-fun Content1() {
-    Text(text= "Content1")
-}
