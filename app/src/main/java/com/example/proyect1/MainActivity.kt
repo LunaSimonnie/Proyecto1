@@ -25,11 +25,20 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Card
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -48,6 +57,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -55,10 +65,13 @@ import com.example.proyect1.ui.theme.Proyect1Theme
 import com.example.proyect1.ui.theme.Screens.HomeScreen
 import com.example.proyect1.ui.theme.Screens.MenuScreen
 import java.security.AccessController
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
@@ -66,7 +79,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()
         setContent {
-            multiScreenApp()
+           /* multiScreenApp()*/
 
            /*Column(
                 modifier = Modifier
@@ -291,7 +304,7 @@ fun clickAction() {
 *
 }*/
 
-@Composable
+/*@Composable
 fun multiScreenApp(){
     val navController=rememberNavController()
     Surface (color = Color.White){
@@ -309,4 +322,63 @@ fun setupNavGraph(navController: NavHostController) {
             HomeScreen(navController)
         }
     }
+}*/
+
+@Composable
+fun ComponentScreen(navController: NavController) {
+    var component by remember{ mutableStateOf("") }
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+    ModalNavigationDrawer(
+        drawerState = drawerState, //current state of drawer
+        drawerContent = {
+            ModalDrawerSheet {
+                Text("Menu",
+                    modifier = Modifier
+                        .padding(16.dp))
+                HorizontalDivider()
+                //Content 1
+                NavigationDrawerItem(
+                    label = { Text(text = "Content1") },
+                    selected = false,
+                    onClick = {
+                        component = "Content1"
+                        scope.launch {
+                        }
+                    }
+                )
+                //Content 2
+                NavigationDrawerItem(
+                    label = { Text(text = "Content2") },
+                    selected = false,
+                    onClick = {
+                        component = "Content2"
+                        scope.launch {
+                        }
+                    }
+                )
+            }
+        }
+    ) {
+        //Screen Content
+        Column {
+            when(component){
+                "Content1" -> {
+                    Content1()
+                }
+                "Content2" -> {
+                    Content2()
+                }
+            }
+        }
+    }
+}
+@Composable
+fun Content2() {
+    Text(text = "Content2")
+}
+
+@Composable
+fun Content1() {
+    Text(text= "Content1")
 }
