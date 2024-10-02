@@ -80,7 +80,7 @@ import androidx.compose.ui.modifier.modifierLocalMapOf
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.proyect1.ui.theme.Screens.ComponentsScreen
+import com.example.proyect1.ui.theme.Screens.ComponentScreen
 import kotlinx.coroutines.launch
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
@@ -333,7 +333,7 @@ fun setupNavGraph(navController: NavHostController) {
             HomeScreen(navController)
         }
         composable("Components") {
-           ComponentsScreen(navController)
+           ComponentScreen(navController)
         }
     }
 }
