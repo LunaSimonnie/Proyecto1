@@ -11,7 +11,7 @@ import androidx.navigation.NavController
 fun MenuScreen(navController:NavController){
     Column {
         Text(text = "Welcome Menu")
-        Button(onClick = { navController.navigate("home")}) {
+        Button(onClick = { navController.navigate("Components")}) {
 
         }
     }

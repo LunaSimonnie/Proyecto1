@@ -10,6 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.Absolute.SpaceEvenly
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,13 +24,29 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -48,6 +65,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -55,10 +73,16 @@ import com.example.proyect1.ui.theme.Proyect1Theme
 import com.example.proyect1.ui.theme.Screens.HomeScreen
 import com.example.proyect1.ui.theme.Screens.MenuScreen
 import java.security.AccessController
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.modifier.modifierLocalMapOf
 
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.proyect1.ui.theme.Screens.ComponentScreen
+import kotlinx.coroutines.launch
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 
 class MainActivity : ComponentActivity() {
@@ -66,44 +90,44 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()
         setContent {
-            multiScreenApp()
+             multiScreenApp()
 
-           /*Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                CustomText()
-                Picture()
-                Content1()
+            /*Column(
+                 modifier = Modifier
+                     .fillMaxSize()
+                     .verticalScroll(rememberScrollState()),
+                 verticalArrangement = Arrangement.Center,
+                 horizontalAlignment = Alignment.CenterHorizontally
+             ) {
+                 CustomText()
+                 Picture()
+                 Content1()
 
 
-                // Text(text ="Simple text")
-                // ModifierExample()
-                //ModifierExample2()
-                //  ModifierExample3()
-            }
-            //Layouts
-            Column {
-                 Text(text = "First Row")
-                 Text(text = "Second Row")
-                 Text(text = "Third Row")
+                 // Text(text ="Simple text")
+                 // ModifierExample()
+                 //ModifierExample2()
+                 //  ModifierExample3()
+             }
+             //Layouts
+             Column {
+                  Text(text = "First Row")
+                  Text(text = "Second Row")
+                  Text(text = "Third Row")
 
-                 Row{
-                     Text(text = "Text1")
-                     Text(text = "Text2")
-                     Text(text = "Text3")
-                     Text(text = "Text2")
-                 }
-                 Box{
-                     Text(text = "Larabel 1")
-                     Text(text = "Larabel 2")
+                  Row{
+                      Text(text = "Text1")
+                      Text(text = "Text2")
+                      Text(text = "Text3")
+                      Text(text = "Text2")
+                  }
+                  Box{
+                      Text(text = "Larabel 1")
+                      Text(text = "Larabel 2")
 
-                 }
-                 Greeting(name ="World")
-             }*/
+                  }
+                  Greeting(name ="World")
+              }*/
         }
     }
 }
@@ -308,5 +332,9 @@ fun setupNavGraph(navController: NavHostController) {
         composable("home") {
             HomeScreen(navController)
         }
+        composable("Components") {
+           ComponentScreen(navController)
+        }
     }
 }
+
